@@ -1,0 +1,18 @@
+name: BlockBreaker-Bungee
+version: 1.0
+author: lusu007
+main: me.lusu007.blockbreaker_bungeecord.BungeeCordMain
+
+commands:
+  broadcast:
+    aliases: [b]
+    description: Sendet eine Nachricht an alle Spieler und Server
+  maintenance:
+    aliases: [wa]
+    description: Setzt den Server in den Wartungsmodus
+
+permissions:
+  server.set.maintenancemode:
+    default: false
+  server.broadcast:
+    default: false
