@@ -1,34 +1,77 @@
 package me.lusu007.blockbreaker_bungeecord;
 
+import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
+import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.io.File;
+import java.io.IOException;
 
 /**
- * - server.set.maintenancemode
  * - server.broadcast
  */
 
 /**
  * Created by Lukas on 09.03.2015.
  */
-public class BungeeCordMain extends Plugin {
+public class BungeeCordMain extends Plugin implements Listener {
 
-    public static boolean maintenancemode;
-    public static String maintenancereason;
-    public static ArrayList<String> maintenanceworker = new ArrayList<>();
+    public static String standardmotd = ChatColor.YELLOW + "BlockBreaker.net " + ChatColor.GRAY + "|" + ChatColor.DARK_AQUA + " BB Network " + ChatColor.YELLOW + "[" + ChatColor.RED + "1.8"+ ChatColor.YELLOW +"]" +
+            "\n" + ChatColor.DARK_RED;
 
     @Override
     public void onEnable() {
 
         registerCommands();
+        registerEvents();
+
+
+        try {
+            if (!getDataFolder().exists()) {
+                getDataFolder().mkdir();
+            }
+
+            File file = new File(getDataFolder().getPath(), "MySQL.yml");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            Configuration config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+
+            if(config.get("host") == null) {
+                config.set("host", "host");
+                config.set("port", "3306");
+                config.set("database", "database");
+                config.set("user", "username");
+                config.set("password", "password");
+
+                ConfigurationProvider.getProvider(YamlConfiguration.class).save(config, file);
+            }
+
+            MySQL.host = config.getString("host");
+            MySQL.port = config.getString("port");
+            MySQL.database = config.getString("database");
+            MySQL.username = config.getString("user");
+            MySQL.password = config.getString("password");
+        } catch(IOException e) {
+        }
+
+        MySQL.connect();
+        MySQLMethods.createTableIfNotExists();
+        MySQLMethods.createData();
+
+        MySQLMethods.setMOTD("Test");
 
         System.out.println("[BlockBreaker-Bungee] BlockBreaker-Bungee enabled!");
+    }
 
-        ProxyServer.getInstance().registerChannel("");
+    private void registerEvents() {
+        new MOTD_Setter(this);
     }
 
     @Override
@@ -38,15 +81,5 @@ public class BungeeCordMain extends Plugin {
 
     private void registerCommands() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new Broadcast_Command("broadcast"));
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Maintenance_Command("maintenance", this));
     }
-
-    public static String getUUID(String playername) {
-        return ProxyServer.getInstance().getPlayer(playername).getUUID();
-    }
-
-    public static ProxiedPlayer getPlayerFromUUID(UUID uuid) {
-        return ProxyServer.getInstance().getPlayer(uuid);
-    }
-
 }
