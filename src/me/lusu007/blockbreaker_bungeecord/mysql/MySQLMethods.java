@@ -12,7 +12,7 @@ public class MySQLMethods {
 
     public static void createData() {
         if(dataExists() == false) {
-            MySQL.update("INSERT INTO serverdata VALUES('" + BungeeCordMain.standardmotd + "')");
+            MySQL.update("INSERT INTO serverdata VALUES('" + BungeeCordMain.standardmotd + "','" + BungeeCordMain.submotd + "')");
         }
     }
 
@@ -21,7 +21,7 @@ public class MySQLMethods {
 
         MySQL.update("CREATE TABLE IF NOT EXISTS rpg(name VARCHAR(100), uuid VARCHAR(100), ep INTEGER, coins INTEGER, campaignprogress INTEGER)");
 
-        MySQL.update("CREATE TABLE IF NOT EXISTS serverdata(motd VARCHAR(100))");
+        MySQL.update("CREATE TABLE IF NOT EXISTS serverdata(motd VARCHAR(100), submotd VARCHAR(100))");
     }
 
     public static boolean dataExists() {
@@ -61,10 +61,27 @@ public class MySQLMethods {
         return motd;
     }
 
-    public static void setMOTD(String motd) {
-        String newmotd = getMOTD() + motd;
+    public static String getSubMOTD() {
+        String submotd = null;
         int id = 1;
 
-        MySQL.update("UPDATE serverdata SET motd = " + newmotd);
+
+        ResultSet ep = MySQL.getResult("SELECT submotd FROM serverdata");
+
+        try {
+            if(ep.next()){
+                submotd = ep.getString("submotd");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return submotd;
+    }
+
+    public static void setSubMOTD(String submotd) {
+        int id = 1;
+
+        MySQL.update("UPDATE serverdata SET submotd = '" + submotd + "'");
     }
 }
