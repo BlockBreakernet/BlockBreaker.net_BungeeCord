@@ -1,5 +1,6 @@
-package me.lusu007.blockbreaker_bungeecord;
+package me.lusu007.blockbreaker_bungeecord.commands.maintenance;
 
+import me.lusu007.blockbreaker_bungeecord.BungeeCordMain;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
@@ -11,25 +12,24 @@ import net.md_5.bungee.event.EventHandler;
 /**
  * Created by Lukas on 03.04.2015.
  */
-public class MOTD_Setter implements Listener {
+public class MaintenanceEvent implements Listener {
 
-    public MOTD_Setter(BungeeCordMain plugin) {
+    public MaintenanceEvent(BungeeCordMain plugin) {
         ProxyServer.getInstance().getPluginManager().registerListener(plugin, this);
     }
 
     @EventHandler
     public void onPing(ProxyPingEvent e) {
-        if(ServerPinger.maintenance == false) {
+        if(MySQLMethods.getMaintenance() == false) {
             ServerPing conn = e.getResponse();
-            //conn.setVersion(new ServerPing.Protocol(ChatColor.RED + "Wartungsarbeiten", 2));
             conn.setDescription(MySQLMethods.getMOTD() + MySQLMethods.getSubMOTD());
             e.setResponse(conn);
         }
 
-        if(ServerPinger.maintenance == true) {
+        if(MySQLMethods.getMaintenance() == true) {
             ServerPing conn = e.getResponse();
             conn.setVersion(new ServerPing.Protocol(ChatColor.RED + "Wartungsarbeiten", 2));
-            conn.setDescription("§bPortal§6MC §8- §cWartungsmodus");
+            conn.setDescription(MySQLMethods.getMOTD() + MySQLMethods.getMaintenanceSubMOTD() + MySQLMethods.getMaintenanceEnd() + "h");
             e.setResponse(conn);
         }
     }

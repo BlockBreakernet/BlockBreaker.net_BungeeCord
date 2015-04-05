@@ -1,5 +1,7 @@
-package me.lusu007.blockbreaker_bungeecord;
+package me.lusu007.blockbreaker_bungeecord.commands.maintenance;
 
+import me.lusu007.blockbreaker_bungeecord.BungeeCordMain;
+import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -9,11 +11,9 @@ import net.md_5.bungee.api.plugin.Listener;
 /**
  * Created by Lukas on 03.04.2015.
  */
-public class ServerPinger extends Command implements Listener {
+public class MaintenanceCommand extends Command implements Listener {
 
-    public static boolean maintenance = false;
-
-    public ServerPinger(String name) {
+    public MaintenanceCommand(String name) {
         super(name);
     }
 
@@ -26,10 +26,12 @@ public class ServerPinger extends Command implements Listener {
 
             if(args.length == 1) {
                 if(args[0].equalsIgnoreCase("on")) {
-                    maintenance = true;
+                    MySQLMethods.setMaintenance(true);
+                    BungeeCordMain.maintenance = true;
                 }
                 if(args[0].equalsIgnoreCase("off")) {
-                    maintenance = false;
+                    MySQLMethods.setMaintenance(false);
+                    BungeeCordMain.maintenance = false;
                 }
             } else {
                 pp.sendMessage(new TextComponent("/maintenance <on|off>"));

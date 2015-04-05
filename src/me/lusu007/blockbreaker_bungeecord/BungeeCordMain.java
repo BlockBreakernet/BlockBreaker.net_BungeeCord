@@ -1,5 +1,7 @@
 package me.lusu007.blockbreaker_bungeecord;
 
+import me.lusu007.blockbreaker_bungeecord.commands.Broadcast_Command;
+import me.lusu007.blockbreaker_bungeecord.commands.maintenance.MaintenanceEvent;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.ChatColor;
@@ -25,6 +27,11 @@ public class BungeeCordMain extends Plugin implements Listener {
     public static String standardmotd = ChatColor.YELLOW + "BlockBreaker.net " + ChatColor.GRAY + "|" + ChatColor.DARK_AQUA + " BlockBreaker Network                 " + ChatColor.YELLOW + "[" + ChatColor.RED + "1.8"+ ChatColor.YELLOW +"]" +
             "\n" + ChatColor.DARK_RED;
     public static String submotd = ChatColor.YELLOW + "+" + ChatColor.DARK_PURPLE + "Server Release " + ChatColor.GRAY + "|" + ChatColor.YELLOW + " +" + ChatColor.AQUA + "RPG Release";
+    public static String maintenancesubmotd = ChatColor.YELLOW + "+" + ChatColor.AQUA + "Voraussichtliches Ende: ";
+
+    public static int maintenanceend = 0;
+
+    public static boolean maintenance = false;
 
     @Override
     public void onEnable() {
@@ -66,13 +73,20 @@ public class BungeeCordMain extends Plugin implements Listener {
         MySQLMethods.createTableIfNotExists();
         MySQLMethods.createData();
 
+        MySQLMethods.setMOTD(standardmotd);
         MySQLMethods.setSubMOTD(submotd);
+
+        maintenance = MySQLMethods.getMaintenance();
 
         System.out.println("[BlockBreaker-Bungee] BlockBreaker-Bungee enabled!");
     }
 
     private void registerEvents() {
-        new MOTD_Setter(this);
+        new MaintenanceEvent(this);
+    }
+
+    private void registerCommand() {
+
     }
 
     @Override

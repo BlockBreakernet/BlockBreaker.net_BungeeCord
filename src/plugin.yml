@@ -12,7 +12,5 @@ commands:
     description: Setzt den Server in den Wartungsmodus
 
 permissions:
-  server.set.maintenancemode:
-    default: false
   server.broadcast:
     default: false

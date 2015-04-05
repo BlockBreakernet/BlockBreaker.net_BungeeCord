@@ -1,4 +1,4 @@
-package me.lusu007.blockbreaker_bungeecord;
+package me.lusu007.blockbreaker_bungeecord.commands;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
