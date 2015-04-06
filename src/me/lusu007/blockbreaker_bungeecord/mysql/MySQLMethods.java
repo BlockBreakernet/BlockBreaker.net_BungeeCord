@@ -12,7 +12,7 @@ public class MySQLMethods {
 
     public static void createData() {
         if(dataExists() == false) {
-            MySQL.update("INSERT INTO serverdata VALUES('" + BungeeCordMain.standardmotd + "', '" + BungeeCordMain.submotd + "', '" + BungeeCordMain.maintenancesubmotd + "', '" + BungeeCordMain.maintenanceend + "', '" + BungeeCordMain.maintenance + "')");
+            MySQL.update("INSERT INTO serverdata VALUES('" + BungeeCordMain.standardmotd + "', '" + BungeeCordMain.submotd + "', '" + BungeeCordMain.maintenancesubmotd + "', '" + BungeeCordMain.maintenanceend + "', " + BungeeCordMain.maintenance + ")");
         }
     }
 

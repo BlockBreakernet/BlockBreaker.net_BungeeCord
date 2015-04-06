@@ -2,6 +2,7 @@ package me.lusu007.blockbreaker_bungeecord;
 
 import me.lusu007.blockbreaker_bungeecord.commands.Broadcast_Command;
 import me.lusu007.blockbreaker_bungeecord.commands.maintenance.MaintenanceEvent;
+import me.lusu007.blockbreaker_bungeecord.listener.Join;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.ChatColor;
@@ -83,10 +84,7 @@ public class BungeeCordMain extends Plugin implements Listener {
 
     private void registerEvents() {
         new MaintenanceEvent(this);
-    }
-
-    private void registerCommand() {
-
+        new Join(this);
     }
 
     @Override
