@@ -5,6 +5,11 @@ import me.lusu007.blockbreaker_bungeecord.commands.maintenance.MaintenanceEvent;
 import me.lusu007.blockbreaker_bungeecord.listener.Join;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
+import me.lusu007.blockbreaker_bungeecord.party.command.PartyCommand;
+import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerChatListener;
+import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerDisconnectListener;
+import me.lusu007.blockbreaker_bungeecord.party.listener.ServerSwitchListener;
+import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
@@ -29,17 +34,23 @@ public class BungeeCordMain extends Plugin implements Listener {
             "\n" + ChatColor.DARK_RED;
     public static String submotd = ChatColor.YELLOW + "+" + ChatColor.DARK_PURPLE + "Server Release " + ChatColor.GRAY + "|" + ChatColor.YELLOW + " +" + ChatColor.AQUA + "RPG Release";
     public static String maintenancesubmotd = ChatColor.YELLOW + "+" + ChatColor.AQUA + "Voraussichtliches Ende: ";
+    public static String partyprefix = "§8[§5§lPARTY§8] §r";
 
     public static int maintenanceend = 0;
 
     public static boolean maintenance = false;
 
+    public static int standardlobbyslots = 10;
+
+    private static BungeeCordMain instance;
+
     @Override
     public void onEnable() {
 
-        registerCommands();
-        registerEvents();
+        registerAll();
 
+
+        instance = this;
 
         try {
             if (!getDataFolder().exists()) {
@@ -82,17 +93,22 @@ public class BungeeCordMain extends Plugin implements Listener {
         System.out.println("[BlockBreaker-Bungee] BlockBreaker-Bungee enabled!");
     }
 
-    private void registerEvents() {
-        new MaintenanceEvent(this);
-        new Join(this);
-    }
-
     @Override
     public void onDisable() {
         System.out.println("[BlockBreaker-Bungee] BlockBreaker-Bungee disabled!");
     }
 
-    private void registerCommands() {
+    private void registerAll() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new Broadcast_Command("broadcast"));
+        BungeeCord.getInstance().getPluginManager().registerCommand(this, new PartyCommand());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerChatListener());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerDisconnectListener());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitchListener());
+        new MaintenanceEvent(this);
+        new Join(this);
+    }
+
+    public static BungeeCordMain getInstance() {
+        return instance;
     }
 }

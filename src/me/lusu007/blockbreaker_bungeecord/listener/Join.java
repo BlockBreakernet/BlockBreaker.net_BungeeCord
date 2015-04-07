@@ -20,8 +20,9 @@ public class Join implements Listener {
     public void onPing(PostLoginEvent e) {
         ProxiedPlayer pp = e.getPlayer();
 
-        if()
+        if(ProxyServer.getInstance().getServerInfo("lobby1").getPlayers().size() == 10) {
 
-        pp.connect(ProxyServer.getInstance().getServerInfo("lobby1"));
+        }
+
     }
 }
