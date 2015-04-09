@@ -16,13 +16,13 @@ public class Create extends SubCommand {
 
     public void onCommand(ProxiedPlayer p, String[] args) {
         if(PartyManager.getParty(p) != null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu bist schon in einer Party. §cBenutze /leave um die Party zu verlassen."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist schon in einer Party. Benutze /leave um die Party zu verlassen."));
             return;
         }
 
         PartyManager.createParty(p);
 
-        p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu hast eine Party erstellt."));
+        p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du hast eine Party erstellt."));
         return;
     }
 

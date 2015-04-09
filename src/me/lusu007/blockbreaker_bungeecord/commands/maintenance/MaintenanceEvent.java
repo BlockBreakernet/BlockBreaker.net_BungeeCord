@@ -1,9 +1,7 @@
 package me.lusu007.blockbreaker_bungeecord.commands.maintenance;
 
-import me.lusu007.blockbreaker_bungeecord.BungeeCordMain;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -13,10 +11,6 @@ import net.md_5.bungee.event.EventHandler;
  * Created by Lukas on 03.04.2015.
  */
 public class MaintenanceEvent implements Listener {
-
-    public MaintenanceEvent(BungeeCordMain plugin) {
-        ProxyServer.getInstance().getPluginManager().registerListener(plugin, this);
-    }
 
     @EventHandler
     public void onPing(ProxyPingEvent e) {

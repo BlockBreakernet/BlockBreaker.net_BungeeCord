@@ -3,7 +3,6 @@ package me.lusu007.blockbreaker_bungeecord.commands.maintenance;
 import me.lusu007.blockbreaker_bungeecord.BungeeCordMain;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
@@ -22,7 +21,7 @@ public class MaintenanceCommand extends Command implements Listener {
         ProxiedPlayer pp = (ProxiedPlayer) sender;
 
         if(pp.hasPermission("server.maintenance")) {
-            if(args.length > 1) return;
+            if(args.length < 1) return;
 
             if(args.length == 1) {
                 if(args[0].equalsIgnoreCase("on")) {
@@ -33,8 +32,20 @@ public class MaintenanceCommand extends Command implements Listener {
                     MySQLMethods.setMaintenance(false);
                     BungeeCordMain.maintenance = false;
                 }
-            } else {
-                pp.sendMessage(new TextComponent("/maintenance <on|off>"));
+            }
+
+            if(args.length == 2 || args.length == 3) {
+                if(args[0].equalsIgnoreCase("add")) {
+
+                }
+
+                if(args[0].equalsIgnoreCase("remove")) {
+
+                }
+
+                if(args[0].equalsIgnoreCase("list")) {
+
+                }
             }
         }
     }

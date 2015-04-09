@@ -23,19 +23,19 @@ public class Join extends SubCommand {
         }
 
         if(PartyManager.getParty(p) != null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu bist schon in einer Party. §cBenutze /leave um die Party zu verlassen."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist schon in einer Party. §cBenutze /leave um die Party zu verlassen."));
             return;
         }
 
         ProxiedPlayer pl = BungeeCord.getInstance().getPlayer(args[0]);
 
         if(pl == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDieser Spieler ist nicht online"));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Dieser Spieler ist nicht online"));
             return;
         }
 
         if(PartyManager.getParty(pl) == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDieser Spieler hat keine Party erstellt."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Dieser Spieler hat keine Party erstellt."));
             return;
         }
 
@@ -43,11 +43,11 @@ public class Join extends SubCommand {
 
         if(party.addPlayer(p)) {
             for(ProxiedPlayer pp : party.getPlayers()) {
-                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDer Spieler §6" + p.getName() + " §bist der Party beigetreten."));
+                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Der Spieler " + p.getName() + " ist der Party beigetreten."));
             }
-            party.getLeader().sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDer Spieler §6" + p.getName() + " §bist der Party beigetreten."));
+            party.getLeader().sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Der Spieler " + p.getName() + " ist der Party beigetreten."));
         }else {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu kannst der Party nicht beitreten."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du kannst der Party nicht beitreten."));
             return;
         }
     }

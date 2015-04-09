@@ -17,14 +17,14 @@ public class List extends SubCommand {
 
     public void onCommand(ProxiedPlayer p, String[] args) {
         if(PartyManager.getParty(p) == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu §cbist §cin §ckeiner §cparty."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist in keiner party."));
             return;
         }
 
         PlayerParty party = PartyManager.getParty(p);
 
-        String leader = "§3Leiter§7: §5"+party.getLeader().getName();
-        String players = "§8Mitlgieder§7: §b";
+        String leader = "Leiter: "+party.getLeader().getName();
+        String players = "Mitlgieder: ";
 
         if(!party.getPlayers().isEmpty()) {
             for(ProxiedPlayer pp : party.getPlayers()) {

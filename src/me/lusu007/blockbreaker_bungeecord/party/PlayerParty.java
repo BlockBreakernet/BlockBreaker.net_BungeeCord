@@ -74,14 +74,13 @@ public class PlayerParty {
 
     public void invite(final ProxiedPlayer p) {
         invitations.add(p);
-        p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bYou are invited in §6"+leader.getName()+"'s §bparty."));
-        p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bJoin §bthe §bparty §bwith §8/§5party §5join §6"+leader.getName()));
+        p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du wurdest von " + leader.getName() + " in eine Party eingeladen."));
         BungeeCord.getInstance().getScheduler().schedule(BungeeCordMain.getInstance(), new Runnable() {
             public void run() {
                 if(invitations.contains(p)) {
                     invitations.remove(p);
                     p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bYour invitations has been expired."));
-                    leader.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bThe invitation to §6"+p.getName()+" §bhas been expired."));
+                    leader.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bThe invitation to §6" + p.getName() + " §bhas been expired."));
                 }
             }
         }, 30L, TimeUnit.SECONDS);

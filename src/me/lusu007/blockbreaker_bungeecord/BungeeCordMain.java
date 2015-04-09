@@ -1,6 +1,6 @@
 package me.lusu007.blockbreaker_bungeecord;
 
-import me.lusu007.blockbreaker_bungeecord.commands.Broadcast_Command;
+import me.lusu007.blockbreaker_bungeecord.commands.BroadcastCommand;
 import me.lusu007.blockbreaker_bungeecord.commands.maintenance.MaintenanceEvent;
 import me.lusu007.blockbreaker_bungeecord.listener.Join;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
@@ -10,6 +10,7 @@ import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerChatListener;
 import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerDisconnectListener;
 import me.lusu007.blockbreaker_bungeecord.party.listener.ServerSwitchListener;
 import net.md_5.bungee.BungeeCord;
+import net.md_5.bungee.BungeeCordLauncher;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
@@ -99,13 +100,13 @@ public class BungeeCordMain extends Plugin implements Listener {
     }
 
     private void registerAll() {
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Broadcast_Command("broadcast"));
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new BroadcastCommand("broadcast"));
         BungeeCord.getInstance().getPluginManager().registerCommand(this, new PartyCommand());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerChatListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerDisconnectListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitchListener());
-        new MaintenanceEvent(this);
-        new Join(this);
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new Join());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new MaintenanceEvent());
     }
 
     public static BungeeCordMain getInstance() {

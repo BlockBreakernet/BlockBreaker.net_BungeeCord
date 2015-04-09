@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="BungeeUntil">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../API´s/BungeeCord/BungeeUntil.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

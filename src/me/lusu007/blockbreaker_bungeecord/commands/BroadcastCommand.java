@@ -9,9 +9,9 @@ import net.md_5.bungee.api.plugin.Command;
 /**
  * Created by Lukas on 09.03.2015.
  */
-public class Broadcast_Command extends Command {
+public class BroadcastCommand extends Command {
 
-    public Broadcast_Command(String name) {
+    public BroadcastCommand(String name) {
         super(name);
     }
 

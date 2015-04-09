@@ -31,7 +31,7 @@ public class PartyCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(!(sender instanceof ProxiedPlayer)) {
-            sender.sendMessage(new TextComponent("[PARTY] You have to be a player."));
+            sender.sendMessage(new TextComponent("[PARTY] Du musst ein Spieler sein!"));
             return;
         }
 
@@ -49,7 +49,7 @@ public class PartyCommand extends Command {
         SubCommand sc = getCommand(args[0]);
 
         if(sc == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cThat §ccommand §cdoesn't §cexist."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "That command doesn't exist."));
             return;
         }
 

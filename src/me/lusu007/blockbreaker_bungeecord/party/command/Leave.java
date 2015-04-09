@@ -17,7 +17,7 @@ public class Leave extends SubCommand {
 
     public void onCommand(ProxiedPlayer p, String[] args) {
         if(PartyManager.getParty(p) == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu §cbist §cin §ckeiner §cparty."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist in keiner party."));
             return;
         }
 
@@ -25,21 +25,21 @@ public class Leave extends SubCommand {
 
         if(party.isLeader(p)) {
             for(ProxiedPlayer pp : party.getPlayers()) {
-                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDie §bParty §bwurde §baufgelöst."));
+                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Die Party wurde aufgelöst."));
             }
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu §bhast §bdie §bParty §baufgelöst."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du hast die Party aufgelöst."));
             PartyManager.deleteParty(party);
             return;
         }else {
             if(party.removePlayer(p)) {
-                p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu §bhast §bdie §bParty §bverlassen."));
+                p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du hast die Party verlassen."));
                 for(ProxiedPlayer pp : party.getPlayers()) {
-                    pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDer §bSpieler §6" + p.getName() + " §bhat §bdie §bParty §bverlassen."));
+                    pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Der Spieler " + p.getName() + " hat die Party verlassen."));
                 }
-                party.getLeader().sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDer §bSpieler §6" + p.getName() + " §bhat §bdie §bParty §bverlassen."));
+                party.getLeader().sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Der Spieler " + p.getName() + " hat die Party verlassen."));
                 return;
             }else {
-                p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu §bkannst §bdie §bParty §bnicht §bverlassen."));
+                p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du kannst die Party nicht verlassen."));
                 return;
             }
         }

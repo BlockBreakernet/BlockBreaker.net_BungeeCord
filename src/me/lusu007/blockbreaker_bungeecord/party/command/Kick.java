@@ -18,38 +18,38 @@ public class Kick extends SubCommand {
 
     public void onCommand(ProxiedPlayer p, String[] args) {
         if(args.length == 0) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cBitte gebe den Spielernamen an."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Bitte gebe den Spielernamen an."));
             return;
         }
 
         if(PartyManager.getParty(p) == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu bist in keiner Party."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist in keiner Party."));
             return;
         }
 
         PlayerParty party = PartyManager.getParty(p);
 
         if(!party.isLeader(p)) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu bist nicht der Party Leiter."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du bist nicht der Party Leiter."));
             return;
         }
 
         ProxiedPlayer pl = BungeeCord.getInstance().getPlayer(args[0]);
 
         if(pl == null) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDieser Spiel ist nicht online."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Dieser Spiel ist nicht online."));
             return;
         }
 
         if(party.removePlayer(pl)) {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu hast §6"+pl.getName()+" §baus der Party gekickt."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du hast " + pl.getName() + " aus der Party gekickt."));
             for(ProxiedPlayer pp : party.getPlayers()) {
-                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDer Spieler §6"+pl.getName()+ " §bwurde aus der Party gekickt."));
+                pp.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Der Spieler §6" + pl.getName() + " wurde aus der Party gekickt."));
             }
-            pl.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§bDu wurdest aus der Party gekickt."));
+            pl.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du wurdest aus der Party gekickt."));
             return;
         }else {
-            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "§cDu kannst diesen Spieler nicht kicken."));
+            p.sendMessage(new TextComponent(BungeeCordMain.partyprefix + "Du kannst diesen Spieler nicht kicken."));
             return;
         }
     }
