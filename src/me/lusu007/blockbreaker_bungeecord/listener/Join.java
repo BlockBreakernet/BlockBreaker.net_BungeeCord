@@ -1,6 +1,6 @@
 package me.lusu007.blockbreaker_bungeecord.listener;
 
-import dev.wolveringer.BP.Player;
+import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -15,6 +15,6 @@ public class Join implements Listener {
     public void onLogin(PostLoginEvent e) {
         ProxiedPlayer pp = e.getPlayer();
 
-        Player.getPlayer(pp.getName()).
+        //MySQLMethods.createUserData(pp);
     }
 }

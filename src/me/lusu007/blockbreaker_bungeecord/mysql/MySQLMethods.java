@@ -1,14 +1,39 @@
 package me.lusu007.blockbreaker_bungeecord.mysql;
 
 import me.lusu007.blockbreaker_bungeecord.BungeeCordMain;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.util.Locale;
 
 /**
  * Created by Lukas on 03.04.2015.
  */
 public class MySQLMethods {
+/**
+    public static void createUserData(ProxiedPlayer pp) {
+        String UUID = pp.getUUID().toString();
+
+        if(isInDataBase(pp, "data")) {
+
+            DateFormat dmy = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY);
+            String lastLoginAsString = dmy.format(System.currentTimeMillis());
+
+            boolean nick = false;
+            int logincounter = 0;
+
+            ResultSet rs = MySQL.getResult("SELECT uuid FROM data WHERE uuid = '" + UUID + "'");
+            try {
+                if (!rs.next()) {
+                    MySQL.update("INSERT INTO data VALUES('" + pp.getName() + "', '" + UUID + "', '" + lastLoginAsString + "', '" + logincounter + "' , " + nick + ")");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
 
     public static void createData() {
         if(dataExists() == false) {
@@ -17,7 +42,7 @@ public class MySQLMethods {
     }
 
     public static void createTableIfNotExists() {
-        MySQL.update("CREATE TABLE IF NOT EXISTS data(name VARCHAR(100), uuid VARCHAR(100), lastlogin VARCHAR(100), nick BOOLEAN)");
+        MySQL.update("CREATE TABLE IF NOT EXISTS data(name VARCHAR(100), uuid VARCHAR(100), lastlogin VARCHAR(100), logincounter INTEGER, nick BOOLEAN)");
 
         MySQL.update("CREATE TABLE IF NOT EXISTS rpg(name VARCHAR(100), uuid VARCHAR(100), ep INTEGER, coins INTEGER, campaignprogress INTEGER)");
 
@@ -147,5 +172,25 @@ public class MySQLMethods {
         }
 
         return maintenance;
+    }
+
+    public static boolean isInDataBase(ProxiedPlayer target, String database) {
+        String uuid = target.getUniqueId().toString();
+
+        boolean isInDatabase = false;
+
+        ResultSet rs = MySQL.getResult("SELECT uuid FROM " + database + " WHERE uuid = '" + uuid + "'");
+
+        try {
+            if(!rs.next()) {
+                isInDatabase = true;
+            } else {
+                isInDatabase = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Boolean.valueOf(isInDatabase).booleanValue();
     }
 }
