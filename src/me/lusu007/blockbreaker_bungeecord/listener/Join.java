@@ -1,8 +1,8 @@
 package me.lusu007.blockbreaker_bungeecord.listener;
 
-import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.PostLoginEvent;
+import net.md_5.bungee.api.event.ServerSwitchEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
@@ -12,9 +12,10 @@ import net.md_5.bungee.event.EventHandler;
 public class Join implements Listener {
 
     @EventHandler
-    public void onLogin(PostLoginEvent e) {
+    public void onLogin(ServerSwitchEvent e) {
         ProxiedPlayer pp = e.getPlayer();
 
-        //MySQLMethods.createUserData(pp);
+        pp.resetTabHeader();
+        pp.setTabHeader(new TextComponent("BlockBreaker.de Servernetzwerk"), new TextComponent(pp.getServer().getInfo().getName() + " - " + pp.getServer().getInfo().getPlayers().size() + "/100"));
     }
 }
