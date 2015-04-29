@@ -20,7 +20,7 @@ public class TabList implements Listener {
 
     @EventHandler
     public void onQuit(PlayerDisconnectEvent e) {
-        e.getPlayer().resetTabHeader();
+        e.getPlayer().setTabHeader(new TextComponent(" "), new TextComponent(" "));
     }
 
     public static void setTabList(ProxiedPlayer pp) {
