@@ -1,6 +1,6 @@
 package me.lusu007.blockbreaker_bungeecord.features;
 
-import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.event.ServerKickEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -12,6 +12,6 @@ public class AutoReconnect implements Listener {
 
     @EventHandler
     public void onKick(ServerKickEvent e) {
-        e.getPlayer().connect(ProxyServer.getInstance().getServerInfo("lobby"));
+        e.setCancelServer(BungeeCord.getInstance().getServerInfo("lobby"));
     }
 }

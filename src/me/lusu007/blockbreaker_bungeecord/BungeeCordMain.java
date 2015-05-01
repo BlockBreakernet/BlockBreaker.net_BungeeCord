@@ -2,6 +2,7 @@ package me.lusu007.blockbreaker_bungeecord;
 
 import me.lusu007.blockbreaker_bungeecord.commands.BroadcastCommand;
 import me.lusu007.blockbreaker_bungeecord.commands.maintenance.MaintenanceEvent;
+import me.lusu007.blockbreaker_bungeecord.features.AutoReconnect;
 import me.lusu007.blockbreaker_bungeecord.features.TabList;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
@@ -30,7 +31,7 @@ import java.io.IOException;
  */
 public class BungeeCordMain extends Plugin implements Listener {
 
-    public static String standardmotd = ChatColor.YELLOW + "BlockBreaker.net " + ChatColor.GRAY + "|" + ChatColor.DARK_AQUA + " BlockBreaker Network                           " + ChatColor.YELLOW + "[" + ChatColor.RED + "1.8"+ ChatColor.YELLOW +"]" +
+    public static String standardmotd = ChatColor.YELLOW + "BlockBreaker.net " + ChatColor.GRAY + "|" + ChatColor.DARK_AQUA + " BlockBreaker Network                            " + ChatColor.YELLOW + "[" + ChatColor.RED + "1.8"+ ChatColor.YELLOW +"]" +
             "\n" + ChatColor.DARK_RED;
     public static String submotd = ChatColor.YELLOW + "+" + ChatColor.DARK_PURPLE + "Server Release " + ChatColor.GRAY + "|" + ChatColor.YELLOW + " +" + ChatColor.AQUA + "RPG Release";
     public static String maintenancesubmotd = ChatColor.YELLOW + "+" + ChatColor.AQUA + "Voraussichtliches Ende: ";
@@ -39,8 +40,6 @@ public class BungeeCordMain extends Plugin implements Listener {
     public static int maintenanceend = 0;
 
     public static boolean maintenance = false;
-
-    public static int standardlobbyslots = 10;
 
     private static BungeeCordMain instance;
 
@@ -106,6 +105,7 @@ public class BungeeCordMain extends Plugin implements Listener {
         BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerDisconnectListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitchListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new MaintenanceEvent());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new AutoReconnect());
     }
 
     public static BungeeCordMain getInstance() {
