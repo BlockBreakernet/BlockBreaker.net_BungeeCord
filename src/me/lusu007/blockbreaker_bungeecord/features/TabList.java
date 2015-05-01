@@ -26,8 +26,13 @@ public class TabList implements Listener {
     public static void setTabList(ProxiedPlayer pp) {
 
         if(pp.getServer().getInfo().getName().contentEquals("lobby")) {
-            pp.setTabHeader(new TextComponent(ChatColor.DARK_RED + "        Block" + ChatColor.DARK_AQUA + "Breaker" + ChatColor.GRAY + ".de        \n" +
+            pp.setTabHeader(new TextComponent(ChatColor.AQUA + "        BlockBreaker" + ChatColor.GREEN + ".de        \n" +
                             ChatColor.GOLD + "Lobby"), new TextComponent("Änderbar"));
+        }
+
+        if(pp.getServer().getInfo().getName().contentEquals("sw")) {
+            pp.setTabHeader(new TextComponent(ChatColor.AQUA + "        BlockBreaker" + ChatColor.GREEN + ".de        \n" +
+                    ChatColor.AQUA + "SkyWars"), new TextComponent("Änderbar"));
         }
     }
 }
