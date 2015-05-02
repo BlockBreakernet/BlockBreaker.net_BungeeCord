@@ -13,5 +13,6 @@ public class AutoReconnect implements Listener {
     @EventHandler
     public void onKick(ServerKickEvent e) {
         e.setCancelServer(BungeeCord.getInstance().getServerInfo("lobby"));
+        e.setCancelled(true);
     }
 }
