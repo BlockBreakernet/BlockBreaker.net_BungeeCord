@@ -54,7 +54,7 @@ public class BungeeCordMain extends Plugin implements Listener {
 
         try {
             if (!getDataFolder().exists()) {
-                getDataFolder().mkdir()
+                getDataFolder().mkdir();
             }
 
             File file = new File(getDataFolder().getPath(), "MySQL.yml");
