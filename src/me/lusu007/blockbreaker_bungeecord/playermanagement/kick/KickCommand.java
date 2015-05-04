@@ -2,6 +2,7 @@ package me.lusu007.blockbreaker_bungeecord.playermanagement.kick;
 
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import net.md_5.bungee.BungeeCord;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -30,27 +31,25 @@ public class KickCommand extends Command {
             }
 
             if(args.length == 1) {
-                pp.sendMessage(new TextComponent(""));
+                sendKickReasons(pp);
                 return;
             }
 
             if(args.length == 2) {
                 ProxiedPlayer target = BungeeCord.getInstance().getPlayer(args[0]);
 
-                if(args[1].equalsIgnoreCase("beleidigung") || args[1].equalsIgnoreCase("insult")) {
-                    kickPlayer(target, KickReason.INSULT);
-                }
-
-                if(args[1].equalsIgnoreCase("hacks") || args[1].equalsIgnoreCase("onspechacks")) {
-                    kickPlayer(target, KickReason.ONSPECHACKS);
-                }
-
-                if(args[1].equalsIgnoreCase("provokation") || args[1].equalsIgnoreCase("provocation")) {
-                    kickPlayer(target, KickReason.PROVOCATION);
-                }
-
-                if(args[1].equalsIgnoreCase("spam")) {
-                    kickPlayer(target, KickReason.SPAM);
+                if(target != null) {
+                    if (args[1].equalsIgnoreCase("beleidigung") || args[1].equalsIgnoreCase("insult")) {
+                        kickPlayer(target, KickReason.INSULT);
+                    } else if (args[1].equalsIgnoreCase("hacks") || args[1].equalsIgnoreCase("onspechacks")) {
+                        kickPlayer(target, KickReason.ONSPECHACKS);
+                    } else if (args[1].equalsIgnoreCase("provokation") || args[1].equalsIgnoreCase("provocation")) {
+                        kickPlayer(target, KickReason.PROVOCATION);
+                    } else if (args[1].equalsIgnoreCase("spam")) {
+                        kickPlayer(target, KickReason.SPAM);
+                    } else {
+                        sendKickReasons(pp);
+                    }
                 }
 
                 return;
@@ -89,13 +88,29 @@ public class KickCommand extends Command {
         // Kicklogger um 1 erhöhen
         int kickcounterold = 0;
 
+        ResultSet rs = MySQL.getResult("SELECT kickcounter FROM data WHERE uuid = '" + uuid + "'");
+
         try {
-            ResultSet rs = MySQL.getResult("SELECT kickcounter FORM data WHERE uuid = '" + uuid + "'");
             kickcounterold = rs.getInt("kickcounter");
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         MySQL.update("UPDATE data SET kickcounter = '" + kickcounterold + 1 + "'");
+    }
+
+    public static void sendKickReasons(ProxiedPlayer pp) {
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "-=-=-=-=-=-=-=-=-=-=-=-=-=[" + ChatColor.GOLD + "Kick Gründe" + ChatColor.DARK_AQUA + "]=-=-=-=-=-=-=-=-=-=-=-=-=-"));
+        pp.sendMessage(new TextComponent(" "));
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "Bei Beleidigung von Spielern oder Teammitgliedern " + ChatColor.GOLD + "-> " + ChatColor.DARK_AQUA + "/kick [Player] Beleidigung/Insult"));
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "Bei Verdacht auf Hacks " + ChatColor.GOLD + "-> " + ChatColor.DARK_AQUA + "/kick [Player] Hack"));
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "Bei Provokation von Spielern oder Teammitgliedern " + ChatColor.GOLD + "-> " + ChatColor.DARK_AQUA + "/kick [Player] Provokation/Provocation"));
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "Bei Spam im Chat " + ChatColor.GOLD + "-> " + ChatColor.DARK_AQUA + "/kick [Player] Spam"));
+        pp.sendMessage(new TextComponent(" "));
+        pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"));
+    }
+
+    public static void sendKickMessage() {
+
     }
 }

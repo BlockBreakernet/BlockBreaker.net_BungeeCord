@@ -2,14 +2,11 @@ package me.lusu007.blockbreaker_bungeecord;
 
 import me.lusu007.blockbreaker_bungeecord.commands.BroadcastCommand;
 import me.lusu007.blockbreaker_bungeecord.features.AutoReconnect;
+import me.lusu007.blockbreaker_bungeecord.features.MySQLData;
 import me.lusu007.blockbreaker_bungeecord.features.ServerSwitch;
 import me.lusu007.blockbreaker_bungeecord.features.TabList;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
-import me.lusu007.blockbreaker_bungeecord.party.command.PartyCommand;
-import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerChatListener;
-import me.lusu007.blockbreaker_bungeecord.party.listener.PlayerDisconnectListener;
-import me.lusu007.blockbreaker_bungeecord.party.listener.ServerSwitchListener;
 import me.lusu007.blockbreaker_bungeecord.playermanagement.kick.KickCommand;
 import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
@@ -99,13 +96,10 @@ public class BungeeCordMain extends Plugin implements Listener {
     private void registerAll() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BroadcastCommand("broadcast"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand("kick"));
-        BungeeCord.getInstance().getPluginManager().registerCommand(this, new PartyCommand());
-        BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerChatListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new TabList());
-        BungeeCord.getInstance().getPluginManager().registerListener(this, new PlayerDisconnectListener());
-        BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitchListener());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new AutoReconnect());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitch());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new MySQLData());
     }
 
     public static BungeeCordMain getInstance() {
