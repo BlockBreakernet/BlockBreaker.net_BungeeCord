@@ -57,11 +57,7 @@ public class MySQLMethods {
         ResultSet rs = MySQL.getResult("SELECT * FROM serverdata WHERE motd = '" + getMOTD() + "'");
 
         try {
-            if(!rs.next()) {
-                dataexists = false;
-            } else {
-                dataexists = true;
-            }
+            dataexists = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -121,11 +117,7 @@ public class MySQLMethods {
         ResultSet rs = MySQL.getResult("SELECT uuid FROM " + database + " WHERE uuid = '" + uuid + "'");
 
         try {
-            if(!rs.next()) {
-                isInDatabase = true;
-            } else {
-                isInDatabase = false;
-            }
+            isInDatabase = !rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
         }
