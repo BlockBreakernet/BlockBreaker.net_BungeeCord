@@ -90,13 +90,16 @@ public class KickCommand extends Command {
 
         ResultSet rs = MySQL.getResult("SELECT kickcounter FROM data WHERE uuid = '" + uuid + "'");
 
+
         try {
             kickcounterold = rs.getInt("kickcounter");
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        MySQL.update("UPDATE data SET kickcounter = '" + kickcounterold + 1 + "'");
+        kickcounterold += 1;
+
+        MySQL.update("UPDATE data SET kickcounter = '" + kickcounterold + "'");
     }
 
     public static void sendKickReasons(ProxiedPlayer pp) {
@@ -108,9 +111,5 @@ public class KickCommand extends Command {
         pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "Bei Spam im Chat " + ChatColor.GOLD + "-> " + ChatColor.DARK_AQUA + "/kick [Player] Spam"));
         pp.sendMessage(new TextComponent(" "));
         pp.sendMessage(new TextComponent(ChatColor.DARK_AQUA + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"));
-    }
-
-    public static void sendKickMessage() {
-
     }
 }
