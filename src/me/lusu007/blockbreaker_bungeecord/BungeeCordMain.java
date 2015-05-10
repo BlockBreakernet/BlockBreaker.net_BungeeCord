@@ -9,6 +9,7 @@ import net.md_5.bungee.BungeeCord;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.api.plugin.PluginManager;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -36,7 +37,7 @@ public class BungeeCordMain extends Plugin {
     private static BungeeCordMain instance;
 
     //Maintenace File
-    public static File file = new File(getInstance().getDataFolder().getPath(), "Wartung.yml");
+    public static File file;
     public static Configuration config;
 
     @Override
@@ -68,11 +69,15 @@ public class BungeeCordMain extends Plugin {
     private void registerAll() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BroadcastCommand("broadcast"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand("kick"));
-        ProxyServer.getInstance().getPluginManager().registerCommand(this, new Maintenance("wartung"));
         BungeeCord.getInstance().getPluginManager().registerListener(this, new TabList());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new AutoReconnect());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitch());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new MySQLData());
+
+        PluginManager pm = ProxyServer.getInstance().getPluginManager();
+
+        pm.registerCommand(this, new Maintenance(this));
+        pm.registerListener(this, new Maintenance(this));
     }
 
     public static BungeeCordMain getInstance() {
@@ -116,6 +121,7 @@ public class BungeeCordMain extends Plugin {
                 getInstance().getDataFolder().mkdir();
             }
 
+            file = new File(getInstance().getDataFolder().getPath(), "Wartung.yml");
 
             if (!file.exists()) {
                 file.createNewFile();
@@ -138,5 +144,9 @@ public class BungeeCordMain extends Plugin {
 
     public static Configuration getMaintenanceCfg() {
         return config;
+    }
+
+    public static File getMaintenanceFile() {
+        return file;
     }
 }

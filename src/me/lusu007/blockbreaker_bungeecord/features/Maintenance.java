@@ -10,7 +10,12 @@ import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import net.md_5.bungee.event.EventHandler;
+
+import java.io.IOException;
 
 /**
  * Created by Lukas on 07.05.2015.
@@ -20,8 +25,11 @@ public class Maintenance extends Command implements Listener {
     public static String reason;
     public static boolean maintenance;
 
-    public Maintenance(String name) {
-        super(name);
+    private final Plugin plugin;
+
+    public Maintenance(Plugin plugin) {
+        super("wartung");
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -32,6 +40,8 @@ public class Maintenance extends Command implements Listener {
             response.setPlayers(new ServerPing.Players(0, 0, new ServerPing.PlayerInfo[0]));
             response.setDescription(ChatColor.AQUA + "BlockBreaker" + ChatColor.GREEN + ".de" + ChatColor.DARK_GRAY + " - " + ChatColor.DARK_RED + "Wartungsmodus");
             response.setVersion(new ServerPing.Protocol(ChatColor.DARK_RED + "Wartungsarbeiten" + ChatColor.DARK_GRAY + "/" + ChatColor.DARK_RED + reason, 2));
+
+            e.setResponse(response);
         }
     }
 
@@ -55,17 +65,36 @@ public class Maintenance extends Command implements Listener {
                 BungeeCordMain.getMaintenanceCfg().set("maintenance", true);
                 BungeeCordMain.getMaintenanceCfg().set("reason", "Wartung");
 
+                try {
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(BungeeCordMain.getMaintenanceCfg(), BungeeCordMain.getMaintenanceFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 maintenance = BungeeCordMain.getMaintenanceCfg().getBoolean("maintenance");
                 reason = BungeeCordMain.getMaintenanceCfg().getString("reason");
+
+                sender.sendMessage(new TextComponent(ChatColor.DARK_RED + "Du hast das Netzwerk in den " + ChatColor.DARK_AQUA + "Wartungsmodus " + ChatColor.GOLD + "gesetzt!"));
+                return;
             }
 
             if(maintenance == true) {
                 BungeeCordMain.getMaintenanceCfg().set("maintenance", false);
                 BungeeCordMain.getMaintenanceCfg().set("reason", "Wartung");
 
+                try {
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(BungeeCordMain.getMaintenanceCfg(), BungeeCordMain.getMaintenanceFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 maintenance = BungeeCordMain.getMaintenanceCfg().getBoolean("maintenance");
                 reason = BungeeCordMain.getMaintenanceCfg().getString("reason");
+
+                sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Du hast das Netzwerk wieder freigeschaltet!"));
+                return;
             }
+            return;
         }
 
         if(args.length >= 1) {
@@ -81,22 +110,37 @@ public class Maintenance extends Command implements Listener {
                 BungeeCordMain.getMaintenanceCfg().set("maintenance", true);
                 BungeeCordMain.getMaintenanceCfg().set("reason", "Wartung");
 
+                try {
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(BungeeCordMain.getMaintenanceCfg(), BungeeCordMain.getMaintenanceFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 maintenance = BungeeCordMain.getMaintenanceCfg().getBoolean("maintenance");
                 reason = BungeeCordMain.getMaintenanceCfg().getString("reason");
+
+                sender.sendMessage(new TextComponent(ChatColor.DARK_RED + "Du hast das Netzwerk in den " + ChatColor.DARK_AQUA + "Wartungsmodus " + ChatColor.GOLD + "gesetzt!"));
+                return;
             }
 
             if(maintenance == true) {
                 BungeeCordMain.getMaintenanceCfg().set("maintenance", false);
                 BungeeCordMain.getMaintenanceCfg().set("reason", "Wartung");
 
+                try {
+                    ConfigurationProvider.getProvider(YamlConfiguration.class).save(BungeeCordMain.getMaintenanceCfg(), BungeeCordMain.getMaintenanceFile());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 maintenance = BungeeCordMain.getMaintenanceCfg().getBoolean("maintenance");
                 reason = BungeeCordMain.getMaintenanceCfg().getString("reason");
+
+                sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Du hast das Netzwerk wieder freigeschaltet!"));
+                return;
             }
 
+            return;
         }
-
-
     }
-
-
 }
