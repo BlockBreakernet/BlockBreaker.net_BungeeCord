@@ -7,10 +7,14 @@ commands:
   broadcast:
     aliases: [b]
     description: Sendet eine Nachricht an alle Spieler und Server
-  maintenance:
+  wartung:
     aliases: [wa]
     description: Setzt den Server in den Wartungsmodus
 
 permissions:
   server.broadcast:
+    default: false
+  server.maintenance.join:
+    default: false
+  server.maintenance.set:
     default: false
