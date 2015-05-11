@@ -73,6 +73,7 @@ public class BungeeCordMain extends Plugin {
         BungeeCord.getInstance().getPluginManager().registerListener(this, new AutoReconnect());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitch());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new MySQLData());
+        BungeeCord.getInstance().getPluginManager().registerListener(this, new ProxyPing());
 
         PluginManager pm = ProxyServer.getInstance().getPluginManager();
 
