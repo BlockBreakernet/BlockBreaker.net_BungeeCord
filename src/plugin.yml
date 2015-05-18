@@ -5,11 +5,13 @@ main: me.lusu007.blockbreaker_bungeecord.BungeeCordMain
 
 commands:
   broadcast:
-    aliases: [b]
     description: Sendet eine Nachricht an alle Spieler und Server
   wartung:
     aliases: [wa]
     description: Setzt den Server in den Wartungsmodus
+  hub:
+    description: Teleportiert dich auf die Lobby
+    usage: /hub
 
 permissions:
   server.broadcast:
@@ -17,4 +19,6 @@ permissions:
   server.maintenance.join:
     default: false
   server.maintenance.set:
+    default: false
+  server.command.hub:
     default: false

@@ -1,6 +1,7 @@
 package me.lusu007.blockbreaker_bungeecord;
 
 import me.lusu007.blockbreaker_bungeecord.commands.BroadcastCommand;
+import me.lusu007.blockbreaker_bungeecord.commands.HubCommand;
 import me.lusu007.blockbreaker_bungeecord.features.*;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQL;
 import me.lusu007.blockbreaker_bungeecord.mysql.MySQLMethods;
@@ -69,6 +70,7 @@ public class BungeeCordMain extends Plugin {
     private void registerAll() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BroadcastCommand("broadcast"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand("kick"));
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new HubCommand("hub"));
         BungeeCord.getInstance().getPluginManager().registerListener(this, new TabList());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new AutoReconnect());
         BungeeCord.getInstance().getPluginManager().registerListener(this, new ServerSwitch());
