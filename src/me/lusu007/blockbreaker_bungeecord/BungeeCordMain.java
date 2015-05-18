@@ -18,9 +18,6 @@ import net.md_5.bungee.config.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * - server.broadcast
- */
 
 /**
  * Created by Lukas on 09.03.2015.
