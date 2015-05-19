@@ -1,5 +1,5 @@
 name: BlockBreaker-Bungee
-version: 1.0
+version: 1.1
 author: lusu007
 main: me.lusu007.blockbreaker_bungeecord.BungeeCordMain
 
@@ -12,6 +12,18 @@ commands:
   hub:
     description: Teleportiert dich auf die Lobby
     usage: /hub
+  unban:
+    description: Unbannt einen Spieler
+    usage: /unban <Spieler>
+  ban:
+    description: Bannt einen Spieler permanent
+    usage: /ban <Spieler>
+  tempban:
+    description: Bannt einen Spieler temporär
+    usage: /tempban <Spieler> <Länge> <Einheit>
+  check:
+    description: Checkt ob ein SPieler gebannt ist
+    usage: /check <Spieler>
 
 permissions:
   server.broadcast:
@@ -21,4 +33,12 @@ permissions:
   server.maintenance.set:
     default: false
   server.command.hub:
+    default: false
+  server.ban.check:
+    default: false
+  server.ban.ban:
+    default: false
+  server.ban.tempban:
+    default: false
+  server.ban.unban:
     default: false
