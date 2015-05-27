@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="BungeeCord">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../TExTeam.net/Server Netzwerk/proxy/BungeeCord.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="jar://$PROJECT_DIR$/../../TExTeam.net/Server Netzwerk/proxy/BungeeCord.jar!/" />
+    </NATIVE>
+    <SOURCES />
+  </library>
+</component>
